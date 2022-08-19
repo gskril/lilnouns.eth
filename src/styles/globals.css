@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Londrina';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url('/fonts/LondrinaSolid-Thin.ttf');
+}
+
+@font-face {
+  font-family: 'Londrina';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/LondrinaSolid-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Londrina';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/LondrinaSolid-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Londrina';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/LondrinaSolid-Black.ttf');
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Londrina;
+  font-weight: 900;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
