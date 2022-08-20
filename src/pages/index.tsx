@@ -1,8 +1,16 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import { Button, Heading, Input } from '@ensdomains/thorin'
 
 const Home: NextPage = () => {
+  async function handleFormSubmit(name: string) {
+    // Check if wallet is connected
+    // Check if wallet has 1 lil noun
+    // If wallet has > 1 lil noun, let them choose which one to use
+    // If wallet has 0 lil nouns, throw an error and redirect to https://lilnouns.wtf/
+    // Confetti noggles on success
+  }
+
   return (
     <>
       <Head>
@@ -18,7 +26,30 @@ const Home: NextPage = () => {
         <meta name="twitter:creator" content="@gregskril" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <main className="wrapper">
+        <div className="container">
+          <Heading className="title" level="1" align="center">
+            lilnoun.eth subdomain claim
+          </Heading>
+          <form
+            className="claim"
+            onClick={(e) => {
+              e.preventDefault()
+            }}
+          >
+            <Input
+              label="Name"
+              placeholder="gregskril"
+              maxLength={42}
+              required
+              spellCheck={false}
+              autoCapitalize="none"
+              suffix=".lilnouns.eth"
+            />
+            <Button variant="action">Claim</Button>
+          </form>
+        </div>
+      </main>
     </>
   )
 }

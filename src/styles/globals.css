@@ -30,16 +30,107 @@
   src: url('/fonts/LondrinaSolid-Black.ttf');
 }
 
+@font-face {
+  font-family: 'PT Root UI';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/PT-Root-UI_Light.otf');
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/PT-Root-UI_Regular.otf');
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/PT-Root-UI_Medium.otf');
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/PT-Root-UI_Bold.otf');
+}
+
+:root {
+  --background: rgba(255, 255, 255, 1);
+  --body: rgba(33, 37, 41, 1);
+  --color-gray: rgba(143, 126, 124, 1);
+  --blue: rgba(73, 101, 240, 1);
+  --red: rgba(228, 5, 54, 1);
+  --dark-red: rgba(214, 60, 94, 1);
+  --warm--background: rgba(225, 215, 213, 1);
+  --warm--border: rgba(207, 189, 186, 1);
+  --warm--accent: rgba(249, 241, 241, 1);
+  --warm--light-text: rgba(128, 128, 128, 1);
+  --warm--dark-text: rgba(34, 27, 26, 1);
+  --cool--background: rgba(213, 215, 225, 1);
+  --cool--border: rgba(189, 192, 207, 1);
+  --cool--accent: rgba(233, 235, 243, 1);
+  --cool--light-text: rgba(121, 128, 156, 1);
+  --cool--dark-text: rgba(21, 28, 59, 1);
+  --heading-font: 'Londrina';
+  --body-font: 'PT Root UI';
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Londrina;
-  font-weight: 900;
+  background: var(--background);
+  font-size: 1.125rem;
 }
 
 *,
-*::before,
-*::after {
+::before,
+::after {
   box-sizing: border-box;
+  font-family: var(--body-font) !important;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--heading-font) !important;
+  letter-spacing: 0.0313rem !important;
+  line-height: 1 !important;
+}
+
+p {
+  line-height: 1.4 !important;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 55rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+}
+
+.claim {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
