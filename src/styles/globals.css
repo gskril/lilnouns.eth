@@ -98,7 +98,10 @@ body {
   font-family: var(--body-font) !important;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--heading-font) !important;
   letter-spacing: 0.0313rem !important;
   line-height: 1 !important;
@@ -113,12 +116,12 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .container {
   width: 100%;
-  max-width: 55rem;
+  max-width: 45rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;

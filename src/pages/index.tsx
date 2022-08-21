@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       <main className="wrapper">
         <div className="container">
           <Heading className="title" level="1" align="center">
-            lilnoun.eth subdomain claim
+            lilnouns.eth subdomain claim
           </Heading>
           <form
             className="claim"
@@ -38,13 +38,13 @@ const Home: NextPage = () => {
             }}
           >
             <Input
-              label="Name"
+              label=""
               placeholder="gregskril"
               maxLength={42}
-              required
               spellCheck={false}
               autoCapitalize="none"
               suffix=".lilnouns.eth"
+              size="large"
             />
             <Button variant="action">Claim</Button>
           </form>
