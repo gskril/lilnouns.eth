@@ -87,7 +87,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: var(--background);
+  background: var(--background) !important;
   font-size: 1.125rem;
 }
 
@@ -111,17 +111,9 @@ p {
   line-height: 1.4 !important;
 }
 
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-bottom: 1rem;
-}
-
 .container {
   width: 100%;
-  max-width: 45rem;
+  max-width: 38rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
@@ -136,4 +128,25 @@ p {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.ens-profile {
+  margin: 2rem auto 4rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 48rem) and (min-height: 34.5em) {
+  .wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 1rem;
+  }
+
+  .ens-profile {
+    position: absolute;
+  }
 }

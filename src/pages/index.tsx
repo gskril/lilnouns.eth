@@ -1,9 +1,23 @@
 import type { NextPage } from 'next'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { Button, Heading, Input } from '@ensdomains/thorin'
+import { Heading, Input, Profile } from '@ensdomains/thorin'
+import { useAccount, useDisconnect, useEnsName } from 'wagmi'
+import MainButton from '../components/connect-button'
 
 const Home: NextPage = () => {
-  async function handleFormSubmit(name: string) {
+  const { address, isConnected } = useAccount()
+  const { disconnect } = useDisconnect()
+  const { data: ensName } = useEnsName({
+    address,
+  })
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  async function handleFormSubmit(event: any) {
     // Check if wallet is connected
     // Check if wallet has 1 lil noun
     // If wallet has > 1 lil noun, let them choose which one to use
@@ -26,6 +40,22 @@ const Home: NextPage = () => {
         <meta name="twitter:creator" content="@gregskril" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {mounted && address && (
+        <div className="ens-profile">
+          <Profile
+            address={address}
+            ensName={ensName || ''}
+            dropdownItems={[
+              {
+                label: 'Disconnect',
+                onClick: () => disconnect(),
+                color: 'red',
+              },
+            ]}
+          />
+        </div>
+      )}
+
       <main className="wrapper">
         <div className="container">
           <Heading className="title" level="1" align="center">
@@ -33,8 +63,9 @@ const Home: NextPage = () => {
           </Heading>
           <form
             className="claim"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault()
+              await handleFormSubmit(e.target)
             }}
           >
             <Input
@@ -46,7 +77,7 @@ const Home: NextPage = () => {
               suffix=".lilnouns.eth"
               size="large"
             />
-            <Button variant="action">Claim</Button>
+            <MainButton />
           </form>
         </div>
       </main>
