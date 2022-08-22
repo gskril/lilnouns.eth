@@ -1,12 +1,13 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { Heading, Input, Profile } from '@ensdomains/thorin'
+import { Dialog, Heading, Input, Profile, Typography } from '@ensdomains/thorin'
 import { useAccount, useContractWrite, useDisconnect, useEnsName } from 'wagmi'
 import MainButton from '../components/connect-button'
 import abi from '../utils/abi.json'
-import { Nfts, TokenId } from '../utils/types'
+import { Nft, TokenId } from '../utils/types'
 import toast, { Toaster } from 'react-hot-toast'
+import Gallery from '../components/nft-grid'
 
 const Home: NextPage = () => {
   const { address } = useAccount()
@@ -17,7 +18,8 @@ const Home: NextPage = () => {
 
   const [name, setName] = useState('')
   const [tokenId, setTokenId] = useState<TokenId>(null)
-  const [lilnouns, setLilnouns] = useState<Nfts[]>()
+  const [lilnouns, setLilnouns] = useState<Nft[]>()
+  const [openDialog, setOpenDialog] = useState<boolean>(false)
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -36,6 +38,7 @@ const Home: NextPage = () => {
           return {
             name: nft.name,
             tokenId: nft.token_id,
+            image: nft.image_url,
           }
         })
       )
@@ -43,7 +46,7 @@ const Home: NextPage = () => {
     if (address) fetchNfts()
   }, [address])
 
-  // Set tokenId of owned lilnoun
+  // Set tokenId of owned lilnoun if the connected wallet owns just 1
   useEffect(() => {
     if (lilnouns) {
       setTokenId(lilnouns[0].tokenId)
@@ -55,7 +58,7 @@ const Home: NextPage = () => {
     contractInterface: abi,
     functionName: 'claimSubdomain',
     chainId: 1,
-    args: [name, Number(tokenId)],
+    args: [name, tokenId],
     mode: 'recklesslyUnprepared',
     onError: (error) => {
       const errMsg: string = error.message
@@ -67,7 +70,13 @@ const Home: NextPage = () => {
       } else if (errMsg.includes('user rejected transaction')) {
         toast.error('Transaction rejected')
       } else {
-        toast.error(errMsg)
+        const errReason = errMsg.split('(reason="')[1].split('", method=')[0]
+        console.log(error)
+        toast.error(errReason, {
+          style: {
+            maxWidth: '100%',
+          },
+        })
       }
     },
   })
@@ -112,7 +121,11 @@ const Home: NextPage = () => {
             className="claim"
             onSubmit={(e) => {
               e.preventDefault()
-              claim.write?.()
+              if (lilnouns?.length === 1) {
+                claim.write?.()
+              } else {
+                setOpenDialog(true)
+              }
             }}
           >
             <Input
@@ -132,6 +145,17 @@ const Home: NextPage = () => {
           </form>
         </div>
       </main>
+
+      <Dialog
+        open={openDialog}
+        title="Which Lil Noun do you want to use?"
+        variant="closable"
+        onDismiss={() => setOpenDialog(false)}
+      >
+        <Gallery nfts={lilnouns} tokenId={tokenId} setTokenId={setTokenId} />
+        <MainButton disabled={!tokenId} onClick={() => claim.write?.()} />
+      </Dialog>
+
       <Toaster position="bottom-center" />
     </>
   )

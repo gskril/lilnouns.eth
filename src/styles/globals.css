@@ -141,13 +141,47 @@ p {
   justify-content: center;
 }
 
-@media (min-width: 48rem) and (min-height: 34.5em) {
+.nfts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 35rem;
+  max-width: 100%;
+}
+
+.nft {
+  transition: transform 0.1s ease-in-out;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.nft.selected {
+  outline: 2px solid var(--cool--dark-text);
+}
+
+.nft:hover {
+  cursor: pointer;
+  transform: translateY(-0.15rem);
+}
+
+.nft__image {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (min-width: 30em) {
+  .nfts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 48em) and (min-height: 34.5em) {
   .wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 1rem;
+    padding-bottom: 3rem;
   }
 
   .ens-profile {

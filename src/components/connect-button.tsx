@@ -1,7 +1,7 @@
 import { Button } from '@ensdomains/thorin'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-const MainButton = () => {
+const MainButton = (props: any) => {
   return (
     <ConnectButton.Custom>
       {({
@@ -26,7 +26,7 @@ const MainButton = () => {
           )
         } else {
           return (
-            <Button variant="action" type="submit">
+            <Button variant="action" type="submit" {...props}>
               Claim
             </Button>
           )

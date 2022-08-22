@@ -1,6 +1,13 @@
-export type Nfts = {
+export type Nft = {
   name: string
-  tokenId: Number
+  tokenId: number
+  image: string
 }
 
-export type TokenId = Number | null
+export type TokenId = number | null
+
+export type NftGrid = {
+  nfts: Nft[] | undefined
+  tokenId: TokenId
+  setTokenId: (tokenId: number) => void
+}
