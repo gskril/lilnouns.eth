@@ -1,0 +1,12 @@
+[
+  {
+    "inputs": [
+      { "internalType": "string", "name": "label", "type": "string" },
+      { "internalType": "uint256", "name": "token_id", "type": "uint256" }
+    ],
+    "name": "claimSubdomain",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

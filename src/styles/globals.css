@@ -111,6 +111,10 @@ p {
   line-height: 1.4 !important;
 }
 
+.wrapper {
+  padding-top: 4rem;
+}
+
 .container {
   width: 100%;
   max-width: 38rem;
@@ -131,7 +135,7 @@ p {
 }
 
 .ens-profile {
-  margin: 2rem auto 4rem;
+  margin: 2rem auto 0;
   display: flex;
   width: 100%;
   justify-content: center;
