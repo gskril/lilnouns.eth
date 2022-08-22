@@ -161,7 +161,7 @@ const Home: NextPage = () => {
             onSubmit={(e) => {
               e.preventDefault()
               if (claim.data) return
-              if (lilnouns && lilnouns?.length > 0) {
+              if (lilnouns && lilnouns?.length === 1) {
                 claim.write?.()
               } else {
                 setOpenDialog(true)
