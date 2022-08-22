@@ -1,7 +1,7 @@
 import { Button } from '@ensdomains/thorin'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
-const MainButton = (props: any) => {
+const MainButton = ({ ...props }: any) => {
   return (
     <ConnectButton.Custom>
       {({
@@ -26,8 +26,18 @@ const MainButton = (props: any) => {
           )
         } else {
           return (
-            <Button variant="action" type="submit" {...props}>
-              Claim
+            <Button
+              variant="action"
+              type="submit"
+              as={props.txHash && 'a'}
+              href={`https://etherscan.io/tx/${props.txHash}`}
+              target="_blank"
+              loading={props.isLoading}
+              {...props}
+            >
+              {props.txHash
+                ? 'View on Etherscan'
+                : (props.disabled && props.claimText) || 'Claim'}
             </Button>
           )
         }

@@ -1,13 +1,21 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import { Dialog, Heading, Input, Profile, Typography } from '@ensdomains/thorin'
-import { useAccount, useContractWrite, useDisconnect, useEnsName } from 'wagmi'
+import { Dialog, Heading, Input, Profile } from '@ensdomains/thorin'
+import {
+  useAccount,
+  useContractWrite,
+  useDisconnect,
+  useEnsName,
+  useWaitForTransaction,
+} from 'wagmi'
 import MainButton from '../components/connect-button'
 import abi from '../utils/abi.json'
 import { Nft, TokenId } from '../utils/types'
 import toast, { Toaster } from 'react-hot-toast'
 import Gallery from '../components/nft-grid'
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 const Home: NextPage = () => {
   const { address } = useAccount()
@@ -20,6 +28,9 @@ const Home: NextPage = () => {
   const [tokenId, setTokenId] = useState<TokenId>(null)
   const [lilnouns, setLilnouns] = useState<Nft[]>()
   const [openDialog, setOpenDialog] = useState<boolean>(false)
+  const [isRegistered, setIsRegistered] = useState<boolean>(false)
+
+  const { width: windowWidth, height: windowHeight } = useWindowSize()
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -48,7 +59,7 @@ const Home: NextPage = () => {
 
   // Set tokenId of owned lilnoun if the connected wallet owns just 1
   useEffect(() => {
-    if (lilnouns) {
+    if (lilnouns && lilnouns.length > 0) {
       setTokenId(lilnouns[0].tokenId)
     }
   }, [lilnouns])
@@ -69,14 +80,33 @@ const Home: NextPage = () => {
         toast.error(`${name}.lilnouns.eth already exists`)
       } else if (errMsg.includes('user rejected transaction')) {
         toast.error('Transaction rejected')
+      } else if (errMsg.includes('Token has already been set')) {
+        toast.error('A name has already been claimed for this token', {
+          style: {
+            maxWidth: '100%',
+          },
+        })
       } else {
         const errReason = errMsg.split('(reason="')[1].split('", method=')[0]
-        console.log(error)
         toast.error(errReason, {
           style: {
             maxWidth: '100%',
           },
         })
+      }
+    },
+  })
+
+  const waitForClaim = useWaitForTransaction({
+    chainId: 1,
+    hash: claim?.data?.hash,
+    onSuccess: (res) => {
+      const didFail = res.status === 0
+      if (didFail) {
+        toast.error('Registration failed')
+      } else {
+        toast.success('Your name has been registered!')
+        setIsRegistered(true)
       }
     },
   })
@@ -112,6 +142,15 @@ const Home: NextPage = () => {
         </div>
       )}
 
+      {isRegistered && (
+        <Confetti
+          width={windowWidth}
+          height={windowHeight}
+          colors={['#44BCFO', '#7298F8', '#A099FF', '#DE82FF', '#7F6AFF']}
+          style={{ zIndex: '1000' }}
+        />
+      )}
+
       <main className="wrapper">
         <div className="container">
           <Heading className="title" level="1" align="center">
@@ -121,7 +160,8 @@ const Home: NextPage = () => {
             className="claim"
             onSubmit={(e) => {
               e.preventDefault()
-              if (lilnouns?.length === 1) {
+              if (claim.data) return
+              if (lilnouns && lilnouns?.length > 0) {
                 claim.write?.()
               } else {
                 setOpenDialog(true)
@@ -141,7 +181,12 @@ const Home: NextPage = () => {
                 setName(e.target.value)
               }}
             />
-            <MainButton />
+            <MainButton
+              disabled={!tokenId}
+              isLoading={claim.data && !isRegistered}
+              txHash={claim.data?.hash}
+              claimText="You don't have a Lil Noun :/"
+            />
           </form>
         </div>
       </main>
@@ -153,7 +198,14 @@ const Home: NextPage = () => {
         onDismiss={() => setOpenDialog(false)}
       >
         <Gallery nfts={lilnouns} tokenId={tokenId} setTokenId={setTokenId} />
-        <MainButton disabled={!tokenId} onClick={() => claim.write?.()} />
+        <MainButton
+          isLoading={claim.data && !isRegistered}
+          txHash={claim.data?.hash}
+          onClick={() => {
+            if (claim.data) return
+            claim.write?.()
+          }}
+        />
       </Dialog>
 
       <Toaster position="bottom-center" />
