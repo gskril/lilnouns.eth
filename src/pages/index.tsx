@@ -6,6 +6,7 @@ import {
   useAccount,
   useContractWrite,
   useDisconnect,
+  useEnsAvatar,
   useEnsName,
   useWaitForTransaction,
 } from 'wagmi'
@@ -20,8 +21,9 @@ import Confetti from 'react-confetti'
 const Home: NextPage = () => {
   const { address } = useAccount()
   const { disconnect } = useDisconnect()
-  const { data: ensName } = useEnsName({
-    address,
+  const { data: ensName } = useEnsName({ address })
+  const { data: ensAvatar } = useEnsAvatar({
+    addressOrName: ensName || undefined,
   })
 
   const [name, setName] = useState('')
@@ -131,6 +133,7 @@ const Home: NextPage = () => {
           <Profile
             address={address}
             ensName={ensName || ''}
+            avatar={ensAvatar || undefined}
             dropdownItems={[
               {
                 label: 'Disconnect',
