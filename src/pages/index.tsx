@@ -164,6 +164,23 @@ const Home: NextPage = () => {
             onSubmit={(e) => {
               e.preventDefault()
               if (claim.data) return
+
+              // Check for name
+              if (!name) {
+                toast.error('Please enter a name')
+                return
+              }
+
+              // Validate name
+              if (name.includes(' ') || name.match(/[A-Z]/)) {
+                toast.error('Capital letters and spaces are not supported', {
+                  style: {
+                    maxWidth: '100%',
+                  },
+                })
+                return
+              }
+
               if (lilnouns && lilnouns?.length === 1) {
                 claim.write?.()
               } else {
