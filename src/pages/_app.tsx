@@ -10,6 +10,7 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import PlausibleProvider from 'next-plausible'
 
 const { chains, provider } = configureChains(
   [chain.mainnet],
@@ -33,7 +34,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThorinGlobalStyles />
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
-          <Component {...pageProps} />
+          <PlausibleProvider domain={'lil.domains'} trackOutboundLinks>
+            <Component {...pageProps} />
+          </PlausibleProvider>
         </RainbowKitProvider>
       </WagmiConfig>
     </ThemeProvider>

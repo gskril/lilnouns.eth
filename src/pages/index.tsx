@@ -16,9 +16,11 @@ import { Nft, TokenId } from '../utils/types'
 import toast, { Toaster } from 'react-hot-toast'
 import Gallery from '../components/nft-grid'
 import useWindowSize from 'react-use/lib/useWindowSize'
+import { usePlausible } from 'next-plausible'
 import Confetti from 'react-confetti'
 
 const Home: NextPage = () => {
+  const plausible = usePlausible()
   const { address } = useAccount()
   const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({ address })
@@ -133,9 +135,11 @@ const Home: NextPage = () => {
       const didFail = res.status === 0
       if (didFail) {
         toast.error('Registration failed')
+        plausible('Claim fail')
       } else {
         toast.success('Your name has been registered!')
         setIsRegistered(true)
+        plausible('Claim success')
       }
     },
   })
