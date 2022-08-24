@@ -169,6 +169,18 @@ p {
   width: 100%;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1.5rem;
+  font-weight: 500;
+  color: var(--warm--light-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media screen and (min-width: 30em) {
   .nfts {
     grid-template-columns: repeat(3, 1fr);

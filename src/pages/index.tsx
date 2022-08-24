@@ -59,6 +59,33 @@ const Home: NextPage = () => {
     if (address) fetchNfts()
   }, [address])
 
+  const handleFormSubmit = (e: any) => {
+    e.preventDefault()
+    if (claim.data) return
+
+    // Check for name
+    if (!name) {
+      toast.error('Please enter a name')
+      return
+    }
+
+    // Validate name
+    if (name.includes(' ') || name.match(/[A-Z]/)) {
+      toast.error('Capital letters and spaces are not supported', {
+        style: {
+          maxWidth: '100%',
+        },
+      })
+      return
+    }
+
+    if (lilnouns && lilnouns?.length === 1) {
+      claim.write?.()
+    } else {
+      setOpenDialog(true)
+    }
+  }
+
   // Set tokenId of owned lilnoun if the connected wallet owns just 1
   useEffect(() => {
     if (lilnouns && lilnouns.length > 0) {
@@ -159,39 +186,11 @@ const Home: NextPage = () => {
           <Heading className="title" level="1" align="center">
             lilnouns.eth subdomain claim
           </Heading>
-          <form
-            className="claim"
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (claim.data) return
-
-              // Check for name
-              if (!name) {
-                toast.error('Please enter a name')
-                return
-              }
-
-              // Validate name
-              if (name.includes(' ') || name.match(/[A-Z]/)) {
-                toast.error('Capital letters and spaces are not supported', {
-                  style: {
-                    maxWidth: '100%',
-                  },
-                })
-                return
-              }
-
-              if (lilnouns && lilnouns?.length === 1) {
-                claim.write?.()
-              } else {
-                setOpenDialog(true)
-              }
-            }}
-          >
+          <form className="claim" onSubmit={(e) => handleFormSubmit(e)}>
             <Input
               label=""
               name="name"
-              placeholder="gregskril"
+              placeholder="greg"
               maxLength={42}
               spellCheck={false}
               autoCapitalize="none"
@@ -210,6 +209,23 @@ const Home: NextPage = () => {
           </form>
         </div>
       </main>
+
+      <footer className="footer">
+        <a
+          href="https://twitter.com/gregskril"
+          target="_blank"
+          rel="noreferrer"
+        >
+          @gregskril
+        </a>
+        <a
+          href="https://github.com/gskril/lilnouns.eth"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </footer>
 
       <Dialog
         open={openDialog}
