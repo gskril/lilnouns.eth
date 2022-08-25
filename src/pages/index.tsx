@@ -195,6 +195,7 @@ const Home: NextPage = () => {
               label=""
               name="name"
               placeholder="greg"
+              disabled={claim.data ? true : false}
               maxLength={42}
               spellCheck={false}
               autoCapitalize="none"
@@ -233,6 +234,7 @@ const Home: NextPage = () => {
 
       <Dialog
         open={openDialog}
+        className="modal"
         title="Which Lil Noun do you want to use?"
         variant="closable"
         onDismiss={() => setOpenDialog(false)}

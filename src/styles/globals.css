@@ -181,6 +181,14 @@ p {
   align-items: center;
 }
 
+/* Thorin dialog on mobile */
+@media screen and (max-width: 639px) {
+  .modal .modal {
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+}
+
 @media screen and (min-width: 30em) {
   .nfts {
     grid-template-columns: repeat(3, 1fr);
