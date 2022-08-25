@@ -183,7 +183,7 @@ p {
 
 /* Thorin dialog on mobile */
 @media screen and (max-width: 639px) {
-  .modal .modal {
+  .modal > div:last-of-type {
     bottom: 50%;
     transform: translateY(50%);
   }

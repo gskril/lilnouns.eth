@@ -154,6 +154,7 @@ const Home: NextPage = () => {
           property="og:description"
           content="Claim your lilnouns.eth subdomain"
         />
+        <meta property="og:image" content="https://lil.domains/sharing.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@lilnounsdao" />
         <meta name="twitter:creator" content="@gregskril" />
@@ -232,23 +233,24 @@ const Home: NextPage = () => {
         </a>
       </footer>
 
-      <Dialog
-        open={openDialog}
-        className="modal"
-        title="Which Lil Noun do you want to use?"
-        variant="closable"
-        onDismiss={() => setOpenDialog(false)}
-      >
-        <Gallery nfts={lilnouns} tokenId={tokenId} setTokenId={setTokenId} />
-        <MainButton
-          isLoading={claim.data && !isRegistered}
-          txHash={claim.data?.hash}
-          onClick={() => {
-            if (claim.data) return
-            claim.write?.()
-          }}
-        />
-      </Dialog>
+      <div className="modal">
+        <Dialog
+          open={openDialog}
+          title="Which Lil Noun do you want to use?"
+          variant="closable"
+          onDismiss={() => setOpenDialog(false)}
+        >
+          <Gallery nfts={lilnouns} tokenId={tokenId} setTokenId={setTokenId} />
+          <MainButton
+            isLoading={claim.data && !isRegistered}
+            txHash={claim.data?.hash}
+            onClick={() => {
+              if (claim.data) return
+              claim.write?.()
+            }}
+          />
+        </Dialog>
+      </div>
 
       <Toaster position="bottom-center" />
     </>
