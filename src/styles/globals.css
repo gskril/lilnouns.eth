@@ -151,11 +151,9 @@ p {
 
 .nft {
   transition: transform 0.1s ease-in-out;
-  border-radius: 0.25rem;
-  overflow: hidden;
 }
 
-.nft.selected {
+.nft.selected img {
   outline: 2px solid var(--cool--dark-text);
 }
 
@@ -166,6 +164,8 @@ p {
 
 .nft__image {
   display: block;
+  border-radius: 0.25rem;
+  margin-bottom: 0.125rem;
   width: 100%;
 }
 
