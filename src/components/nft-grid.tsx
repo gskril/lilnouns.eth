@@ -33,6 +33,9 @@ export default function Gallery({ nfts, tokenId, setTokenId }: NftGrid) {
             key={nft.tokenId}
             onClick={() => setTokenId(nft.tokenId)}
           >
+            <Typography as="span" className="nft__id">
+              {nft.tokenId}
+            </Typography>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="nft__image" src={nft.image} alt={nft.name} />
             <Typography
