@@ -112,11 +112,18 @@ const Home: NextPage = () => {
       } else if (errMsg.includes('user rejected transaction')) {
         toast.error('Transaction rejected')
       } else if (errMsg.includes('Token has already been set')) {
-        toast.error('A name has already been claimed for this token', {
-          style: {
-            maxWidth: '100%',
-          },
-        })
+        const hasMultipleNouns = lilnouns && lilnouns.length > 1
+
+        toast.error(
+          `A name has already been claimed with ${
+            hasMultipleNouns ? 'this token' : 'your Lil Noun'
+          }`,
+          {
+            style: {
+              maxWidth: '100%',
+            },
+          }
+        )
       } else {
         const errReason = errMsg.split('(reason="')[1].split('", method=')[0]
         toast.error(errReason, {
