@@ -2,6 +2,7 @@ export type Nft = {
   name: string
   tokenId: number
   image: string
+  domain?: string
 }
 
 export type TokenId = number | null
