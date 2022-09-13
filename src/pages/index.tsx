@@ -245,7 +245,24 @@ const Home: NextPage = () => {
           open={openDialog}
           title="Which Lil Noun do you want to use?"
           variant="closable"
-          onDismiss={() => setOpenDialog(false)}
+          onDismiss={() => {
+            if (isRegistered) {
+              // Refresh the page on dialog exit after a registration to fully reset state
+              window.location.reload()
+            } else if (claim.data) {
+              // If a claim has already started, don't exit the modal
+              return toast.error(
+                "You can't close the dialog during registration",
+                {
+                  style: {
+                    maxWidth: '100%',
+                  },
+                }
+              )
+            } else {
+              setOpenDialog(false)
+            }
+          }}
         >
           <Gallery nfts={lilnouns} tokenId={tokenId} setTokenId={setTokenId} />
           <MainButton
