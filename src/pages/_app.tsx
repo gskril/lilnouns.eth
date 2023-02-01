@@ -14,7 +14,10 @@ import PlausibleProvider from 'next-plausible'
 
 const { chains, provider } = configureChains(
   [chain.mainnet],
-  [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
+  [
+    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY || '' }),
+    publicProvider(),
+  ]
 )
 
 const { connectors } = getDefaultWallets({
