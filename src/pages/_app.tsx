@@ -15,7 +15,7 @@ import PlausibleProvider from 'next-plausible'
 const { chains, provider } = configureChains(
   [chain.mainnet],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY || '' }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || '' }),
     publicProvider(),
   ]
 )
